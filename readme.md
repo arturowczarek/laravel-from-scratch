@@ -71,3 +71,16 @@ public function show (Task $task) {
     return view('tasks.show', compact('task'));
 }
 ```
+
+# Lesson 10
+- To specify place where content should be inserted use directive `@yield('content')`
+- Instead creating separately model, controller and migration, use `make:model` flags `-m -c`
+- To use layout utilize `@section` and `@extends` directives:
+```php
+@extends('layout)
+@section('content')
+
+@endsection
+```
+- To include some content use `@include('layouts.nav')`
+- There is a convention to keep your layout partials in `layout` directory and name the main layout file `master`
