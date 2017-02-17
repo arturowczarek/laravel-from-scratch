@@ -56,3 +56,7 @@ public function scopeIncomplete($query)
     return $query->where('completed', 0);
 }
 ```
+
+# Lesson 8
+- The method returning all the items is often called `index`
+- New controllers are created with `php artisan make:controller TasksController`
