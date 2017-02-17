@@ -1,40 +1,58 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+#Lesson 4
+- .env file is a place where you should keep your keys, API keys etc.
+- `php artican migrate` runs all the migrations from `database/migrations` creating all the necessary tables in configured schema. It also creates `migrations` table to keep records of all the runned migrations
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+#Lesson 5
+- You can retrieve data passed do view via `<?= $name ?>` or `{{ $name }}`
+- Pass data using second argument after view name or using `with(argument, value)` method
+- Passing data as second argument you can either create new array or use `compact(parameter1, parameter2)` function
+- In templates use blade directives (eg. `@foreach($tasks as $task) {{ $task }} @endforeach`) instead of php structures
 
-## About Laravel
+#Lesson 6
+- To display all the possible artisan commands use `php artisan`
+- `php artisan help [commands]` displays help
+- To create new migration use eg. `php artisan make:migration create_tasks_table`. It's not going to create new table
+- To create new table in migration add `--create=[tableName]` option
+- When you delete migration and receive an error try update the autoloader `composer dump-autoload`
+- Methods creating column names correspond to the data type. You can get more information from documentation or reading source code of `Illuminate\Database\Schema\Blueprint`
+  - increments
+  - integer
+  - string
+  - text
+  - timestamps
+- To run migrations use `php artisan migrate`. You can refresh them using subtask `:refresh`
+- Returned entities are automatically converted into JSON response
+- `dd($someVariable)` allows us to show the variable value
+## Passing data to url
+- You can pass parameters to url using eg. `Route::get('/tasks/{task}', function ($id)`
+- When `id` corresponds to some real entity you can populate it passing entity in method: `Route::get('/tasks/{task}', function (Task $task)`
+ 
+# Lesson 7
+- Create model with `php artisan make:model Task`
+## Tinker
+- To play with php and eloquent use `php artisan tinker`
+- `App\Task::all())` - get all entities
+- You can use conditionals like `App\Task::where('id', '>', 2)->get();`
+- If you don't use `get` method you'll receive `Illuminate\Database\Eloquent\Builder object
+- To get only one field from all records use `App\Task::pluck('body')`
+- The result is `Illuminate\Database\Eloquent\Collection`. It contains methods like `first`
+- Upon creating new entity via `$task = new App\Task;` and setting values using `$task->body = 'Go to the market';` you can save it invoking `$task->save();`
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
-
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+- `php artisan migrate:reset` rolls back all the migrations
+- To automatically create migration while creating model use `php artisan make:model Task --migration`
+- If you want to specify default value for entity use `$table->boolean('completed')->default(false);`
+- You can use static function to facilitate fetching data from database
+```php
+public static function incomplete()
+{
+    return static::where('completed', 0)->get();
+}
+```
+- When we want to make constructions like `App\Task::incomplete()->get()->where('id', '>', 1)` we have to resort to local scopes like in
+```php
+public function scopeIncomplete($query)
+{
+    return $query->where('completed', 0);
+}
+```
