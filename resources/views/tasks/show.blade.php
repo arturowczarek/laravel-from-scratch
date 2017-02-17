@@ -8,13 +8,6 @@
     <title>Laravel</title>
 </head>
 <body>
-
-@foreach ($tasks as $task)
-    <li>
-        <a href="/tasks/{{ $task->id }}">
-            {{ $task->body }}
-        </a>
-    </li>
-@endforeach
+<h1>{{ $task->body }}</h1>
 </body>
 </html>
