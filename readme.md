@@ -84,3 +84,54 @@ public function show (Task $task) {
 ```
 - To include some content use `@include('layouts.nav')`
 - There is a convention to keep your layout partials in `layout` directory and name the main layout file `master`
+
+# Lesson 11
+## REST review
+- GET /posts - displays all the posts
+- GET /posts/create - displays form for adding new form
+- POST /posts - adds new form
+- GET /posts/{id}/edit - displays form to edit post with specified id
+- GET /posts/{id} - shows the post
+- PATCH /posts/{id} - updated the post
+- DELETE /posts/{id} - deletes the post
+
+
+- When you generate controller add the flag `-r` to generate resourceful controller with all the necessary methods
+- `request()->all()` gives all the request parameters. You can get only one field with `request('fieldName')` or selected fields with `request(['title', 'body'])`
+- Laravel generates a csrf token which has to be passed in field with `{{ csrf_field() }}`. The fields looks like this: ` "_token" => "RatQYPlj5RRjsWyqCiNhw0BcOcTTYz0QjeS55tTW"`
+
+## Creating entities
+- One way is to create entities using
+```php
+$post = new Post;
+$post->title = request('title');
+$post->body = request('body');
+$post->save();
+```
+- The other is to use:
+```php
+Post::create([
+    'title' => request('title'),
+    'body' => request('body')
+]);
+```
+- Remember to fill in fillable field to allow the second option:
+```php
+class Post extends Model
+{
+    protected $fillable = ['title', 'body'];
+}
+```
+- The inverse of `$fillable` is `protected $guarded = ['user_id'];`. In specific cases it can be set to empty array
+- There is a technique to create your own Model to inherit from containing `$guarder` with empty array:
+```php
+namespace App;
+
+use Illuminate\Database\Eloquent\Model as Eloquent;
+
+class Model extends Eloquent
+{
+    protected $fillable = [];
+}
+
+```

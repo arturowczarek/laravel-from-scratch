@@ -2,7 +2,8 @@
 @section('content')
     <h1>Create a Post</h1>
     <hr>
-    <form>
+    <form method="POST" action="/posts">
+        {{ csrf_field() }}
         <div class="form-group row">
             <label for="title" class="col-sm-2 col-form-label">Title</label>
             <div class="col-sm-10">
