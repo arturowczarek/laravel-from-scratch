@@ -60,3 +60,14 @@ public function scopeIncomplete($query)
 # Lesson 8
 - The method returning all the items is often called `index`
 - New controllers are created with `php artisan make:controller TasksController`
+
+# Lesson 9
+- Route model binding is the ability to bind model when its id is passed in url. The route name must match parameter name. The laravel will perform `Task::find(id)` and use primary key to find entity
+```php
+Route::get('/tasks/{task}', 'TasksController@show');
+```
+```php
+public function show (Task $task) {
+    return view('tasks.show', compact('task'));
+}
+```
