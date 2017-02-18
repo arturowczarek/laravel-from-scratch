@@ -35,6 +35,11 @@ class PostsController extends Controller
 
 //        Post::create(request()->all());
 
+        $this->validate(request(), [
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
         Post::create(request(['title', 'body']));
 
         return redirect('/');

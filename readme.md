@@ -135,3 +135,19 @@ class Model extends Eloquent
 }
 
 ```
+
+# Lesson 12
+- You can't rely only on validation on client side
+- Use server side validation instead:
+```php
+$this->validate(request(), [
+    'title' => 'required',
+    'body' => 'required'
+]);
+```
+- It'll return to previous page with error fields. You can access them:
+```php
+@foreach ($errors->all() as $error)
+<li>{{ $error }}</li>
+@endforeach
+```
