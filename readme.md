@@ -151,3 +151,10 @@ $this->validate(request(), [
 <li>{{ $error }}</li>
 @endforeach
 ```
+
+#Lesson 13
+- You can utilize fields `created_at` and `updated_at` to get post creation and update date
+- `created_at` and `updated_at` are instances of carbon library and have many interesting methods
+- To get formatted date you can use `toFormattedDateString()`
+- The source code of query steps can be found in `Illuminate\Database\Query\Builder`
+- The modifier `latest()` works like `orderBy` with field `created_at`
