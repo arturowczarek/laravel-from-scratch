@@ -161,3 +161,21 @@ $this->validate(request(), [
 
 #Lesson 14
 - Laravel mix is a npm dependency
+
+# Lesson 15
+- `Comment::class` is equivalent of `"\App\Comment"`
+- First side of one to many relationship is created using `hasMany` function
+```php
+public function comments()
+{
+    return $this->hasMany(Comment::class);
+}
+```
+- The other side is created with `belongsTo`
+```php
+public function post()
+{
+    return $this->belongsTo(Post::class);
+}
+```
+- You can access each side via field: `\App\Post::find(1)->comments`
