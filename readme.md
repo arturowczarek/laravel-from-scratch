@@ -158,3 +158,6 @@ $this->validate(request(), [
 - To get formatted date you can use `toFormattedDateString()`
 - The source code of query steps can be found in `Illuminate\Database\Query\Builder`
 - The modifier `latest()` works like `orderBy` with field `created_at`
+
+#Lesson 14
+- Laravel mix is a npm dependency
