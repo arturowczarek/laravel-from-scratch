@@ -179,3 +179,11 @@ public function post()
 }
 ```
 - You can access each side via field: `\App\Post::find(1)->comments`
+
+# Lesson 16
+- Don't nest your REST urls too much
+- Use `back()` helper function to redirect to the previous page
+- While creating subentity you can:
+  - create it in controller
+  - create it in entity using `Subentity::create`
+  - create it in entity using `$this->subentities()->create(['field' => 'value'])`
