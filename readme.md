@@ -203,3 +203,14 @@ public function post()
 #Lesson 18
 - You can create new user with tinker
 - Create new password using `$user->password = bcrypt('password');`
+
+# Lesson 19
+- To access input data use `\Request::input` or `request()->input`
+- To redirect to home you can use `return redirect('/')` or `return redirect()->home()`. The latter method required naming the route `Route::get('/', 'PostsController@index')->name('home');
+- When the field has corresponding field with suffix `confirmation`, the validation `confirmed` checks the fields' equality
+- Fetch user name with `Auth::user()->name`. You can chech whether the user is logged in with `Auth::check()`
+- To prevent access to all the methods except some use `$this->middleware('auth')->except(['index', 'show']);`
+- Fetching user id can be done with `auth()->id()`
+- When you have relation to some entities you can use method save to add another entity: `$this->posts()->save($post);`. This will save the `user_id` for us
+- The method `attempt` attempts to authenticate user against the date in database `auth()->attempt(request(['email', 'password']))`
+- To allow only guests using the methods use middleware `guest`: `$this->middleware('guest')`
