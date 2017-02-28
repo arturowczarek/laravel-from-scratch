@@ -241,3 +241,48 @@ view()->composer('layouts.sidebar', function($view) {
     $view->with('archives', \App\Post::archives());
 });
 ```
+
+# Lesson 22
+- Laravel has phpunit as a dependency. You can use it typing `phpunit`. Make sure you have `vendor/bin` in your `PATH` variable
+- Database factories are made with `factory('App\User')->make()`. They are located in `database/factories` directory
+- To persist them use `create()` method instead: `factory('App\User')->create()`
+- You can take it further and create multiple entities at once: `factory('App\User', 50)->create()`
+- You can create your own factories:
+```php
+$factory->define(App\Post::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'user_id' => function () {
+            return factory(App\User::class)->create()->id;
+        },
+        'title' => $faker->sentence,
+        'body' => $faker->paragraph
+    ];
+});
+```
+- You can overrite the default values passing an array in `make`/`create` method:
+```php
+$second = factory(Post::class)->create([
+    'created_at' => \Carbon\Carbon::now()->subMonth()
+]);
+```
+- Assert count (`$this->assertCount(2, $posts);`) asserts the number of instances in collection
+- Environment variables overrides used with phpunit are located in `phpunit.xml` file. Eg.
+```xml
+<php>
+    <env name="APP_ENV" value="testing"/>
+    <env name="CACHE_DRIVER" value="array"/>
+    <env name="SESSION_DRIVER" value="array"/>
+    <env name="QUEUE_DRIVER" value="sync"/>
+    <env name="DB_DATABASE" value="blog_testing"/>
+</php>
+```
+- Use transaction to roll back the database after running test
+```php
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+class ExampleTest extends TestCase
+{
+    use DatabaseTransactions;
+}
+```
