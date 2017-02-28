@@ -286,3 +286,6 @@ class ExampleTest extends TestCase
     use DatabaseTransactions;
 }
 ```
+
+# Lesson 23
+- Laravel provides dependency injection for constructor and every single action
