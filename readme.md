@@ -214,3 +214,22 @@ public function post()
 - When you have relation to some entities you can use method save to add another entity: `$this->posts()->save($post);`. This will save the `user_id` for us
 - The method `attempt` attempts to authenticate user against the date in database `auth()->attempt(request(['email', 'password']))`
 - To allow only guests using the methods use middleware `guest`: `$this->middleware('guest')`
+- You can resort to mutator to automatically bcrypt password
+
+# Lesson 20
+- With eloquent you can create fairly complicated queries: `\App\Post::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')->groupBy('year', 'month')->get()->toArray()`
+- Use Carbon to convert month name to month number: `Carbon::parse($month)->month`
+- You can conditionally build eloquent query:
+```php
+public function scopeFilter($query, $filters)
+{
+    if ($month = $filters['month']) {
+        $query->whereMonth('created_at', Carbon::parse($month)->month);
+    }
+
+
+    if ($year = $filters['year']) {
+        $query->whereYear('created_at', $year);
+    }
+}
+```
