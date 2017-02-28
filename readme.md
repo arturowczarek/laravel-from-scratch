@@ -233,3 +233,11 @@ public function scopeFilter($query, $filters)
     }
 }
 ```
+
+# Lesson 21
+- View composers can bind variables on views loading. You should add them in `AppServiceProvider->boot` method
+```php
+view()->composer('layouts.sidebar', function($view) {
+    $view->with('archives', \App\Post::archives());
+});
+```
