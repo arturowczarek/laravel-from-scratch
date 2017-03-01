@@ -289,3 +289,31 @@ class ExampleTest extends TestCase
 
 # Lesson 23
 - Laravel provides dependency injection for constructor and every single action
+
+# Lesson 24
+- When we want to access View, Request or App facades, we can use `view()`, `request()` and `app()` functions respectively
+- If we want to bind to the container we use `App::bind('App\Billing\Stripe', function () { ... })`, eg:
+```php
+App::bind('App\Billing\Stripe', function () {
+    return new \App\Billing\Stripe(config('services.stripe.key'));
+});
+```
+- To access config file you can use `config('configFileName.key.subKey)`
+- Resolving bound service can be done with `App::make` or `resolve()` or `app()`:
+```php
+$stripe = App::make('App\Billing\Stripe');
+$stripe = resolve('App\Billing\Stripe');
+$stripe = app('App\Billing\Stripe');
+```
+- You can register singleton with `App::singleton()` instead of `App::bind()`:
+```php
+App::singleton('App\Billing\Stripe', function () {
+    return new \App\Billing\Stripe(config('services.stripe.key'));
+});
+
+$stripe1 = App::make('App\Billing\Stripe');
+$stripe2 = resolve('App\Billing\Stripe');
+$stripe3 = app('App\Billing\Stripe');
+dd($stripe1, $stripe2, $stripe3);
+```
+- With `App::instance()` you can swap existing instance with new one

@@ -1,5 +1,14 @@
 <?php
 
+App::singleton('App\Billing\Stripe', function () {
+    return new \App\Billing\Stripe(config('services.stripe.key'));
+});
+
+$stripe1 = App::make('App\Billing\Stripe');
+$stripe2 = resolve('App\Billing\Stripe');
+$stripe3 = app('App\Billing\Stripe');
+dd($stripe1, $stripe2, $stripe3);
+
 Route::get('/tasks', 'TasksController@index');
 Route::get('/tasks/{task}', 'TasksController@show');
 Route::get('/', 'PostsController@index')->name('home');
