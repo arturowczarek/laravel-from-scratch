@@ -317,3 +317,18 @@ $stripe3 = app('App\Billing\Stripe');
 dd($stripe1, $stripe2, $stripe3);
 ```
 - With `App::instance()` you can swap existing instance with new one
+
+# Lesson 25
+- Add services registration in `AppServiceProvider`'s `register()` method
+- `AppServiceProvider` has `app` property to bind services: `$this->app->singleton()` 
+- You can add `$app` as a function parameter when some dependencies are necessary:
+```php
+$this->app->singleton(Stripe::class, function ($app) {
+    $app->make
+    return new Stripe(config('services.stripe.key'));
+});
+```
+- Providers in `config/app/providers` are the building blocks of Laravel
+- Then the service is not required on every single page load we can defer loading it with field `protected $defer = true;` in our `ServiceProvider`
+- If you have anything in your boot method, the `ServiceProvider` can't be deferred
+- `php artisan make:provider` will generate service provider for you
