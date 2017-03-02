@@ -368,7 +368,7 @@ class Welcome extends Mailable
 ```
 - We can also pass some fields to the view using `with` method: `return $this->view('emails.welcome')->with(...)`
 
-# Leson 26
+# Leson 27
 - When the emails should suppport markdown, provide `--markdown` flag when generating them: `php artisan make:mail WelcomeAgain --markdown="emails.welcome-again"`. Such generated email class will reference markdown instead of view method
 - There are button components, panel component, table component etc.
 - To extract any resources from vendor files use: `php artisan vendor:publish --tag=laravel-mail`.
@@ -377,3 +377,25 @@ Copied Directory [/vendor/laravel/framework/src/Illuminate/Mail/resources/views]
 Publishing complete.
 ```
 - You can create multiple themes. Just create new css file and set the theme name in mail configuration file
+
+# Lesson 28
+- Request classes are made with `php artisan make:request RegistrationRequest`
+- The `rules` method performs validation:
+```php
+public function rules()
+{
+    return [
+        'name' => 'required',
+        'email' => 'required|email',
+        'password' => 'required|confirmed'
+    ];
+}
+```
+- The `authorize` methods determines if the user is authorized to make the request:
+```php
+public function authorize()
+{
+    return true;
+}
+```
+- Every `request(['name', 'email', 'password'])` should be replaced with `$this->only(['name', 'email', 'password'])`
