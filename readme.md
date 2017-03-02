@@ -406,3 +406,21 @@ public function authorize()
 - To set some value, provide an array with new values: `session(['message' => 'Something custom']);`
 - You can flash something to the session. Such variable will be available for only one request:
 `session->flash()`. It can be useful for single use data (like error messages, notifications etc)
+
+# Lesson 30
+- To make combined primary key pass array to `primary` method of table blueprint: `$table->primary(['post_id', 'tag_id'])`
+- To create many to many relationship use `$this->belongsToMany(Post::class);`
+- When we fetch all Posts using `App\Post::all()` none of the tags will be fetched. To do it use `App\Post::with('tags')->get()` instead
+- To attach entity to collection use attach method:
+```php
+$post = App\Post::first();
+```
+```php
+$tag = App\Tag::where('name', 'personal')->first();
+```
+```php
+$post->tags()->attach($tag->id);
+// or
+$post->tags()->attach($tag);
+```
+- There is also a detach method: `$post->tags()->detach($tag)`
