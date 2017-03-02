@@ -424,3 +424,12 @@ $post->tags()->attach($tag->id);
 $post->tags()->attach($tag);
 ```
 - There is also a detach method: `$post->tags()->detach($tag)`
+
+# Lesson 31
+- The method `getRouteKeyName` will perform where condition while binding entity on route name
+```php
+public function getRouteKeyName()
+{
+    return 'name';
+}
+```
