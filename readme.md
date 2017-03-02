@@ -399,3 +399,10 @@ public function authorize()
 }
 ```
 - Every `request(['name', 'email', 'password'])` should be replaced with `$this->only(['name', 'email', 'password'])`
+
+# Lesson 29
+- We can access session using `session()` or `request()->session()`
+- To retrieve some value, provide key and default value: `session('message', 'Here is a default message')`
+- To set some value, provide an array with new values: `session(['message' => 'Something custom']);`
+- You can flash something to the session. Such variable will be available for only one request:
+`session->flash()`. It can be useful for single use data (like error messages, notifications etc)
