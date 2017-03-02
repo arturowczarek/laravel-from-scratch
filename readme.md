@@ -424,3 +424,25 @@ $post->tags()->attach($tag->id);
 $post->tags()->attach($tag);
 ```
 - There is also a detach method: `$post->tags()->detach($tag)`
+
+# Lesson 31
+- The method `getRouteKeyName` will perform where condition while binding entity on route name. It is used when the entity is injected into method. It matches the rout key to column name returned from the function
+```php
+public function getRouteKeyName()
+{
+    return 'name';
+}
+```
+- Useful technique is to pluck some fields for the needs of composed view:
+```php
+public function boot()
+{
+    view()->composer('layouts.sidebar', function ($view) {
+        $view->with('tags', \App\Tag::pluck('name'));
+    });
+}
+```
+- To fetch all the tags with some non empty collection use `\App\Tag::has('posts')`, eg:
+```php
+\App\Tag::has('posts')->pluck('name')
+```

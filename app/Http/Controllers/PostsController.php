@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Repositories\Posts;
+use App\Tag;
 
 class PostsController extends Controller
 {
