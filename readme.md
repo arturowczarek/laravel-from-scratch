@@ -332,3 +332,38 @@ $this->app->singleton(Stripe::class, function ($app) {
 - Then the service is not required on every single page load we can defer loading it with field `protected $defer = true;` in our `ServiceProvider`
 - If you have anything in your boot method, the `ServiceProvider` can't be deferred
 - `php artisan make:provider` will generate service provider for you
+
+Lesson 26
+- To prepare new email class use `php artisan make:mail`. Laravel will generate `app/Mail` folder and put new email there
+- Newly created email can be sent with `Mail::to($user)->send(new Welcome)`
+- Globally the field "from" comes from `mail.php` configuration file
+- When some fields in email class are public, they can be used in templates:
+```php
+class Welcome extends Mailable
+{
+    use Queueable, SerializesModels;
+    public $user;
+
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
+    public function build()
+    {
+        return $this->view('emails.welcome');
+    }
+}
+```
+```php
+<!DOCTYPE html>
+<html lang="{{ config('app.locale') }}">
+<head>
+    <title>Laravel</title>
+</head>
+<body>
+    <h1>Welcome to Laracasts! {{ $user->name }}</h1>
+</body>
+</html>
+```
+- We can also pass some fields to the view using `with` method: `return $this->view('emails.welcome')->with(...)`
