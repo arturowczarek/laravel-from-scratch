@@ -446,3 +446,10 @@ public function boot()
 ```php
 \App\Tag::has('posts')->pluck('name')
 ```
+
+# Lesson 32
+- `php artisan make:event SomeEvent` creates new event class to be sent to the listeners
+- `php artisan make:listener SendNotification --event="SomeEvent"` creates new listener
+- All the listenings have to be registered in `EventServiceProvider` i `$listen` method
+- When we don't want to manually create all the events, listeners and register them. We can only add something in `$listen` method and run `php artisan  event:generate`
+- To publish new event use `event` function: `event(new \App\Events\ThreadCreated(['name' => 'Some new thread']))`
